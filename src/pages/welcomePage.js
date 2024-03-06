@@ -1,19 +1,31 @@
-import { USER_INTERFACE_ID, START_QUIZ_BUTTON_ID } from '../constants.js';
-import { createWelcomeElement } from '../views/welcomeView.js';
+
+import { START_QUIZ_BUTTON_ID, USER_INTERFACE_ID } from '../constants.js';
+import { createInputElement, createWelcomeElement } from '../views/welcomeView.js';
 import { initQuestionPage } from './questionPage.js';
 
 export const initWelcomePage = () => {
+
   const userInterface = document.getElementById(USER_INTERFACE_ID);
   userInterface.innerHTML = '';
 
   const welcomeElement = createWelcomeElement();
-  userInterface.appendChild(welcomeElement);
+  const inputElement = createInputElement();
+  
 
+  welcomeElement.appendChild(inputElement)
+  userInterface.appendChild(welcomeElement);
+  console.log(document.getElementById('inputname').value)
+  localStorage.setItem("username",document.getElementById('inputname').value)
   document
     .getElementById(START_QUIZ_BUTTON_ID)
     .addEventListener('click', startQuiz);
 };
 
+
 const startQuiz = () => {
+  
+  localStorage.setItem("username",document.getElementById('inputname').value)
+
   initQuestionPage();
 };
+

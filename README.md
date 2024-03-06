@@ -63,8 +63,8 @@ Tasks could look like this, using the [MoSCoW](https://en.wikipedia.org/wiki/MoS
 
 - [x] (must have) A user can see one question at a time, stepping through the quiz
 - [ ] (must have) A user can select an answer for each question
-- [ ] (must have) Change the <title>
-- [ ] (must have) add a favicon
+- [x ] (must have) Change the <title>
+- [x ] (must have) add a favicon
 - [ ] (should have) A user can see what the correct answer is after they selected their answer.
 - [ ] (should have) A user can see their score update in real-time as they select answers
 - [ ] (should have) A user can refresh the page and still have his/her given answers available

@@ -5,6 +5,8 @@ import { initQuestionPage } from './questionPage.js';
 
 export const initWelcomePage = () => {
 
+  localStorage.setItem('score', `${0}`);
+
   const userInterface = document.getElementById(USER_INTERFACE_ID);
   userInterface.innerHTML = '';
 
@@ -23,9 +25,11 @@ export const initWelcomePage = () => {
 
 
 const startQuiz = () => {
-  
+ 
   localStorage.setItem("username",document.getElementById('inputname').value)
-
+  localStorage.setItem('score', `${0}`);
   initQuestionPage();
 };
+
+
 

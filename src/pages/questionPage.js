@@ -12,6 +12,7 @@ export const initQuestionPage = (currentIndex) => {
     currentIndex = 0;
   }
   const currentQuestion = quizData.questions[currentIndex];
+
   const userInterface = document.getElementById(USER_INTERFACE_ID);
   userInterface.innerHTML = '';
 
@@ -40,12 +41,31 @@ export const initQuestionPage = (currentIndex) => {
 
   document
     .getElementById(NEXT_QUESTION_BUTTON_ID)
-    .addEventListener('click', nextQuestion);
+    .addEventListener('click', () => {
+      const answerList = Array.from(document.querySelectorAll('li'));
+
+      // Check if any answer is selected
+      const isAnswerSelected = answerList.some(
+        (li) => li.style.backgroundColor === 'green'
+      );
+
+      if (isAnswerSelected) {
+        nextQuestion();
+      } else {
+        const correctAnswers = answerList.filter(
+          (li) => li.innerText.charAt(0) === currentQuestion.correct
+        )[0];
+        correctAnswers.style.backgroundColor = 'green';
+
+        setTimeout(nextQuestion, 2000);
+      }
+    });
 };
 
 const showAnswer = (e) => {
   const getAnswerElement = e.target;
 
+  quizData.questions[quizData.currentQuestionIndex].selected = true;
   const isCorrect = getAnswerElement.getAttribute('data-answer') === 'true';
   if (isCorrect) {
     getAnswerElement.style.backgroundColor = 'green';
@@ -61,6 +81,7 @@ const showAnswer = (e) => {
       score++;
       localStorage.setItem('score', `${score}`);
     }
+    counter++;
   } else {
     getAnswerElement.style.backgroundColor = 'red';
 

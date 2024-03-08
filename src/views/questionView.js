@@ -16,7 +16,7 @@ export const createQuestionElement = (question) => {
   element.innerHTML = String.raw`
   <p>Hello ${userName ? userName : ""} Good Luck!</p>
     <p>${quizData.currentQuestionIndex+1}/${quizData.questions.length}</p>
-    <h1>${question}</h1>
+    <h3>${question}</h3>
 
     <ul id="${ANSWERS_LIST_ID}">
     </ul>

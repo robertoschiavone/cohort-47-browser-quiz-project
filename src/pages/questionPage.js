@@ -7,15 +7,16 @@ import { quizData } from '../data.js';
 import { createAnswerElement } from '../views/answerView.js';
 import { createQuestionElement } from '../views/questionView.js';
 
-
-let counter = 0;
-let answeredQuestions=[];
-
-export const initQuestionPage = () => {
+export const initQuestionPage = (currentIndex) => {
+  if (currentIndex === undefined) {
+    currentIndex = 0;
+  }
+  const currentQuestion = quizData.questions[currentIndex];
   const userInterface = document.getElementById(USER_INTERFACE_ID);
   userInterface.innerHTML = '';
 
-  const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
+  localStorage.setItem('currentIndex', currentIndex.toString());
+
   const questionElement = createQuestionElement(currentQuestion.text);
 
   userInterface.appendChild(questionElement);
@@ -25,7 +26,7 @@ export const initQuestionPage = () => {
   for (const [key, answerText] of Object.entries(currentQuestion.answers)) {
     const answerElement = createAnswerElement(key, answerText);
 
-    if (quizData.questions[quizData.currentQuestionIndex].correct === key) {
+    if (quizData.questions[currentIndex].correct === key) {
       answerElement.setAttribute('data-answer', true);
     } else {
       answerElement.setAttribute('data-answer', false);
@@ -35,7 +36,7 @@ export const initQuestionPage = () => {
     answersListElement.appendChild(answerElement);
   }
 
-  questionElement.appendChild(showScore(counter))
+  questionElement.appendChild(showScore());
 
   document
     .getElementById(NEXT_QUESTION_BUTTON_ID)
@@ -43,21 +44,28 @@ export const initQuestionPage = () => {
 };
 
 const showAnswer = (e) => {
-
   const getAnswerElement = e.target;
-  quizData.questions[quizData.currentQuestionIndex].selected=true;
+
   const isCorrect = getAnswerElement.getAttribute('data-answer') === 'true';
   if (isCorrect) {
     getAnswerElement.style.backgroundColor = 'green';
+    let savedScore = parseInt(localStorage.getItem('score'));
+    let score = 0;
+    if (savedScore) {
+      console.log('--59--' + savedScore);
+      savedScore++;
 
-
-    counter++;
+      localStorage.setItem('score', `${savedScore}`);
+    } else {
+      console.log('--63--' + score);
+      score++;
+      localStorage.setItem('score', `${score}`);
+    }
   } else {
     getAnswerElement.style.backgroundColor = 'red';
 
     document.querySelector('[data-answer="true"]').style.backgroundColor =
       'green';
-
   }
 
   // Disable further clicks after an answer is selected
@@ -69,37 +77,36 @@ const showAnswer = (e) => {
     answer.style.pointerEvents = 'none';
   }
 
-  //saveAnswer();
+  // saveAnswer();
 };
 
-const showScore = (counter) => {
-  const scoreText = `${counter * 10}`;
-  const scoreNode = document.createTextNode(scoreText);
-  const scorElement=document.createElement("div")
-  scorElement.className="score-element"
-  scorElement.appendChild(scoreNode)
+const showScore = () => {
+  let score = localStorage.getItem('score');
+
+  const scoreNode = document.createTextNode(score);
+  const scorElement = document.createElement('div');
+  scorElement.className = 'score-element';
+  scorElement.appendChild(scoreNode);
   return scorElement;
 };
 
 const nextQuestion = () => {
-  quizData.currentQuestionIndex = quizData.currentQuestionIndex + 1;
+  var currentIndex = parseInt(localStorage.getItem('currentIndex'));
+  currentIndex++;
 
-  if (quizData.currentQuestionIndex < quizData.questions.length) {
-    initQuestionPage();
+  if (currentIndex < quizData.questions.length) {
+    initQuestionPage(currentIndex);
   } else {
-    quizData.currentQuestionIndex = 0;
+    currentIndex = 0;
 
     getScorePage();
   }
 };
 
 const getScorePage = () => {
-  
-  const userName=localStorage.getItem('username')
-  
-  const scoreInfo = `Hello ${userName} you have earned ${counter * 10} points out of ${
-    quizData.questions.length * 10
-  } points`;
+  const userName = localStorage.getItem('username');
+  const score = localStorage.getItem('score');
+  const scoreInfo = `Hello ${userName} you have earned ${score} points out of ${quizData.questions.length} points`;
   const textCont = document.createTextNode(scoreInfo);
   const textEl = document.createElement('p');
   const userInterf = document.getElementById(USER_INTERFACE_ID);
@@ -128,34 +135,11 @@ const getScorePage = () => {
 };
 
 const retakeTest = () => {
-  counter = 0;
-
+  localStorage.setItem('score', `${0}`);
+  localStorage.setItem('currentIndex', `${0}`);
   const divScore = document.getElementById(USER_INTERFACE_ID);
 
   divScore.firstElementChild.style.display = 'block';
 
   initQuestionPage();
 };
-
-// function saveAnswer() {
-//   if (quizData.questions[quizData.currentQuestionIndex].selected) {
-//     answeredQuestions.push(quizData.questions[quizData.currentQuestionIndex]);
-//     sessionStorage.setItem("answeredQuestions", JSON.stringify(answeredQuestions));
-// }
-// }
-
-// function loadAnswers() {
- 
-//           const savedAnswers = sessionStorage.getItem("answeredQuestions");
-//           if (savedAnswers!== null) {
-//             quizData.questions=JSON.parse(savedAnswers)
-//           }
-   
-// }
-
-// function refreshPage() {
-//   sessionStorage.clear();
-//   location.reload();
-// }
-
-// window.onload = loadAnswers;

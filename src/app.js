@@ -5,10 +5,10 @@ const loadApp = () => {
   // quizData.currentQuestionIndex = 0;
 
   let currentIndex = parseInt(localStorage.getItem('currentIndex'));
- 
-if (!currentIndex) {
-  currentIndex=0
-}
+
+  if (!currentIndex) {
+    currentIndex = 0;
+  }
   if (currentIndex !== 0) {
     initQuestionPage(currentIndex);
   } else {

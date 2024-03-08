@@ -7,7 +7,7 @@ body {
   background-color: rgb(210, 195, 195);
   font-size: 16px;
 }
-p{
+p {
   color: aliceblue;
 }
 .centered {
@@ -21,7 +21,7 @@ p{
   width: max-content;
 }
 
-#inputname{
+#inputname {
   border: 3px solid(141, 73, 38);
   margin-left: 3rem;
   margin-top: 0.1rem;
@@ -30,11 +30,10 @@ p{
   height: 60px;
   font-size: 34px;
   box-sizing: border-box;
-  z-index:1000 !important;
-} 
+  z-index: 1000 !important;
+}
 
-#start-quiz-button{
-
+#start-quiz-button {
   font-size: clamp(0.3rem, 0.3rem + 0.7619vw, 1rem);
   background-color: #c27812;
   box-sizing: border-box;
@@ -45,7 +44,6 @@ p{
   width: 180px;
   height: 60px;
   float: right;
-
 }
 
 .result-content {
@@ -68,7 +66,6 @@ p{
 }
 
 .question-holder {
-
   display: grid;
   position: relative;
   flex-direction: column;
@@ -82,9 +79,6 @@ p{
   height: 80vh;
   width: 80vh;
   /* transform: translate(-15%,-1%); */
-
-
-
 }
 
 #next-question-button {
@@ -96,11 +90,9 @@ p{
   cursor: pointer;
   border: 3px solid var(--dark-brown);
   border-radius: 10px;
-  
-
 }
 
-.score-element{
+.score-element {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -111,7 +103,6 @@ p{
   border: 20px solid var(--dark-brown);
   padding: 5px;
   border-radius: 10px;
-
 }
 
 .restart-button {
@@ -127,9 +118,6 @@ p{
   height: 60px;
 }
 
-
-
-
 .scrollable {
   height: auto;
   max-height: 80vh;
@@ -144,10 +132,7 @@ ul {
   cursor: pointer;
   align-items: center;
   position: relative;
-
-
 }
-
 
 li {
   font-size: 18px;
@@ -162,23 +147,15 @@ li {
   text-align: start;
   box-shadow: 4px 6px 0px 0px rgba(26, 18, 6, 0.75);
   color: black;
-
 }
 
 @media only screen and (max-width: 768px) {
   #next-question-button {
-
     margin-top: 4rem;
 
-  
     margin-left: 5rem;
-  
-  }
-  
-  .score-element{
- 
-   
-  
   }
 
+  .score-element {
+  }
 }

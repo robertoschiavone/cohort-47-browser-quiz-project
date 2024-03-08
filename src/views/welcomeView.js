@@ -5,7 +5,6 @@ import { START_QUIZ_BUTTON_ID } from '../constants.js';
  * @returns {Element}
  */
 export const createWelcomeElement = () => {
-
   const element = document.createElement('div');
 
   element.innerHTML = String.raw`
@@ -17,12 +16,11 @@ export const createWelcomeElement = () => {
 };
 
 export const createInputElement = () => {
-
   const element = document.createElement('input');
 
-        element.type="text"
-        element.name="name"
-        element.id="inputname"
+  element.type = 'text';
+  element.name = 'name';
+  element.id = 'inputname';
 
   return element;
 };

@@ -7,15 +7,15 @@ import { quizData } from '../data.js';
  */
 export const createQuestionElement = (question) => {
   const element = document.createElement('div');
-  const userName=localStorage.getItem('username')
+  const userName = localStorage.getItem('username');
 
-  element.className="question-holder"
+  element.className = 'question-holder';
   let currentIndex = parseInt(localStorage.getItem('currentIndex'));
 
   // I use String.raw just to get fancy colors for the HTML in VS Code.
   element.innerHTML = String.raw`
-  <p>Hello ${userName ? userName : ""} Good Luck!</p>
-    <p>${currentIndex+1}/${quizData.questions.length}</p>
+  <p>Hello ${userName ? userName : ''} Good Luck!</p>
+    <p>${currentIndex + 1}/${quizData.questions.length}</p>
     <h1>${question}</h1>
 
     <ul id="${ANSWERS_LIST_ID}">

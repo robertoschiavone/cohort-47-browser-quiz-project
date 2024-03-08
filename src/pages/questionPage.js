@@ -7,10 +7,7 @@ import { quizData } from '../data.js';
 import { createAnswerElement } from '../views/answerView.js';
 import { createQuestionElement } from '../views/questionView.js';
 
-
-
 export const initQuestionPage = (currentIndex) => {
-
   if (currentIndex === undefined) {
     currentIndex = 0;
   }
@@ -41,15 +38,12 @@ export const initQuestionPage = (currentIndex) => {
 
   questionElement.appendChild(showScore());
 
-  
   document
     .getElementById(NEXT_QUESTION_BUTTON_ID)
     .addEventListener('click', nextQuestion);
 };
 
 const showAnswer = (e) => {
-
-
   const getAnswerElement = e.target;
 
   const isCorrect = getAnswerElement.getAttribute('data-answer') === 'true';
@@ -58,12 +52,12 @@ const showAnswer = (e) => {
     let savedScore = parseInt(localStorage.getItem('score'));
     let score = 0;
     if (savedScore) {
-      console.log("--59--"+savedScore)
+      console.log('--59--' + savedScore);
       savedScore++;
-      
+
       localStorage.setItem('score', `${savedScore}`);
     } else {
-      console.log("--63--"+score)
+      console.log('--63--' + score);
       score++;
       localStorage.setItem('score', `${score}`);
     }
@@ -101,7 +95,6 @@ const nextQuestion = () => {
   currentIndex++;
 
   if (currentIndex < quizData.questions.length) {
-    
     initQuestionPage(currentIndex);
   } else {
     currentIndex = 0;

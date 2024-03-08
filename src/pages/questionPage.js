@@ -43,8 +43,8 @@ export const initQuestionPage = () => {
       const answerList = Array.from(document.querySelectorAll('li'));
 
       // Check if any answer is selected
-      const isAnswerSelected = answerList.some((li) =>
-        li.classList.contains('clicked')
+      const isAnswerSelected = answerList.some(
+        (li) => li.style.backgroundColor === 'green'
       );
 
       if (isAnswerSelected) {

@@ -7,8 +7,8 @@ import { quizData } from '../data.js';
 import { createAnswerElement } from '../views/answerView.js';
 import { createQuestionElement } from '../views/questionView.js';
 
-let score = 0;
-let savedScore = parseInt(localStorage.getItem('score'));
+
+
 export const initQuestionPage = (currentIndex) => {
 
   if (currentIndex === undefined) {
@@ -39,8 +39,9 @@ export const initQuestionPage = (currentIndex) => {
     answersListElement.appendChild(answerElement);
   }
 
-  questionElement.appendChild(showScore(score));
+  questionElement.appendChild(showScore());
 
+  
   document
     .getElementById(NEXT_QUESTION_BUTTON_ID)
     .addEventListener('click', nextQuestion);
@@ -54,10 +55,15 @@ const showAnswer = (e) => {
   const isCorrect = getAnswerElement.getAttribute('data-answer') === 'true';
   if (isCorrect) {
     getAnswerElement.style.backgroundColor = 'green';
+    let savedScore = parseInt(localStorage.getItem('score'));
+    let score = 0;
     if (savedScore) {
+      console.log("--59--"+savedScore)
       savedScore++;
+      
       localStorage.setItem('score', `${savedScore}`);
     } else {
+      console.log("--63--"+score)
       score++;
       localStorage.setItem('score', `${score}`);
     }
@@ -95,6 +101,7 @@ const nextQuestion = () => {
   currentIndex++;
 
   if (currentIndex < quizData.questions.length) {
+    
     initQuestionPage(currentIndex);
   } else {
     currentIndex = 0;
@@ -136,7 +143,7 @@ const getScorePage = () => {
 
 const retakeTest = () => {
   localStorage.setItem('score', `${0}`);
-
+  localStorage.setItem('currentIndex', `${0}`);
   const divScore = document.getElementById(USER_INTERFACE_ID);
 
   divScore.firstElementChild.style.display = 'block';

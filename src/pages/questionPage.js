@@ -55,7 +55,6 @@ export const initQuestionPage = (currentIndex) => {
         const correctAnswers = answerList.filter(
           (li) => li.innerText.charAt(0) === currentQuestion.correct
         )[0];
-        console.log(correctAnswers);
         correctAnswers.style.backgroundColor = 'green';
 
         setTimeout(nextQuestion, 2000);

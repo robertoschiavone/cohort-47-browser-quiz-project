@@ -10,12 +10,12 @@ export const createQuestionElement = (question) => {
   const userName=localStorage.getItem('username')
 
   element.className="question-holder"
-
+  let currentIndex = parseInt(localStorage.getItem('currentIndex'));
 
   // I use String.raw just to get fancy colors for the HTML in VS Code.
   element.innerHTML = String.raw`
   <p>Hello ${userName ? userName : ""} Good Luck!</p>
-    <p>${quizData.currentQuestionIndex+1}/${quizData.questions.length}</p>
+    <p>${currentIndex+1}/${quizData.questions.length}</p>
     <h1>${question}</h1>
 
     <ul id="${ANSWERS_LIST_ID}">

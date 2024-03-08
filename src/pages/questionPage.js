@@ -7,9 +7,9 @@ import { quizData } from '../data.js';
 import { createAnswerElement } from '../views/answerView.js';
 import { createQuestionElement } from '../views/questionView.js';
 
-
 let counter = 0;
-let answeredQuestions=[];
+let questionAnswered = false;
+let answeredQuestions = [];
 
 export const initQuestionPage = () => {
   const userInterface = document.getElementById(USER_INTERFACE_ID);
@@ -35,21 +35,37 @@ export const initQuestionPage = () => {
     answersListElement.appendChild(answerElement);
   }
 
-  questionElement.appendChild(showScore(counter))
+  questionElement.appendChild(showScore(counter));
 
   document
     .getElementById(NEXT_QUESTION_BUTTON_ID)
-    .addEventListener('click', nextQuestion);
+    .addEventListener('click', () => {
+      const answerList = Array.from(document.querySelectorAll('li'));
+
+      // Check if any answer is selected
+      const isAnswerSelected = answerList.some((li) =>
+        li.classList.contains('clicked')
+      );
+
+      if (isAnswerSelected) {
+        nextQuestion();
+      } else {
+        const correctAnswers = answerList.filter(
+          (li) => li.innerText.charAt(0) === currentQuestion.correct
+        )[0];
+        console.log(correctAnswers);
+        correctAnswers.style.backgroundColor = 'green';
+        setTimeout(nextQuestion, 2000);
+      }
+    });
 };
 
 const showAnswer = (e) => {
-
   const getAnswerElement = e.target;
-  quizData.questions[quizData.currentQuestionIndex].selected=true;
+  quizData.questions[quizData.currentQuestionIndex].selected = true;
   const isCorrect = getAnswerElement.getAttribute('data-answer') === 'true';
   if (isCorrect) {
     getAnswerElement.style.backgroundColor = 'green';
-
 
     counter++;
   } else {
@@ -57,7 +73,6 @@ const showAnswer = (e) => {
 
     document.querySelector('[data-answer="true"]').style.backgroundColor =
       'green';
-
   }
 
   // Disable further clicks after an answer is selected
@@ -75,9 +90,9 @@ const showAnswer = (e) => {
 const showScore = (counter) => {
   const scoreText = `${counter * 10}`;
   const scoreNode = document.createTextNode(scoreText);
-  const scorElement=document.createElement("div")
-  scorElement.className="score-element"
-  scorElement.appendChild(scoreNode)
+  const scorElement = document.createElement('div');
+  scorElement.className = 'score-element';
+  scorElement.appendChild(scoreNode);
   return scorElement;
 };
 
@@ -94,12 +109,11 @@ const nextQuestion = () => {
 };
 
 const getScorePage = () => {
-  
-  const userName=localStorage.getItem('username')
-  
-  const scoreInfo = `Hello ${userName} you have earned ${counter * 10} points out of ${
-    quizData.questions.length * 10
-  } points`;
+  const userName = localStorage.getItem('username');
+
+  const scoreInfo = `Hello ${userName} you have earned ${
+    counter * 10
+  } points out of ${quizData.questions.length * 10} points`;
   const textCont = document.createTextNode(scoreInfo);
   const textEl = document.createElement('p');
   const userInterf = document.getElementById(USER_INTERFACE_ID);
@@ -145,12 +159,12 @@ const retakeTest = () => {
 // }
 
 // function loadAnswers() {
- 
+
 //           const savedAnswers = sessionStorage.getItem("answeredQuestions");
 //           if (savedAnswers!== null) {
 //             quizData.questions=JSON.parse(savedAnswers)
 //           }
-   
+
 // }
 
 // function refreshPage() {

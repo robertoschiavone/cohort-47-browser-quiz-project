@@ -11,6 +11,7 @@ export const initQuestionPage = (currentIndex) => {
   if (currentIndex === undefined) {
     currentIndex = 0;
   }
+
   const currentQuestion = quizData.questions[currentIndex];
 
   const userInterface = document.getElementById(USER_INTERFACE_ID);
@@ -36,7 +37,10 @@ export const initQuestionPage = (currentIndex) => {
     answerElement.addEventListener('click', showAnswer);
     answersListElement.appendChild(answerElement);
   }
-
+  const progress = document.getElementById('progress');
+  const totalQuestions = quizData.questions.length;
+  const percentComplete = ((currentIndex + 1) / totalQuestions) * 100;
+  progress.style.width = percentComplete + '%';
   questionElement.appendChild(showScore());
 
   document
@@ -57,7 +61,7 @@ export const initQuestionPage = (currentIndex) => {
         )[0];
         correctAnswers.style.backgroundColor = 'green';
 
-        setTimeout(nextQuestion, 2000);
+        setTimeout(nextQuestion, 500);
       }
     });
 };
@@ -72,16 +76,13 @@ const showAnswer = (e) => {
     let savedScore = parseInt(localStorage.getItem('score'));
     let score = 0;
     if (savedScore) {
-      console.log('--59--' + savedScore);
       savedScore++;
 
       localStorage.setItem('score', `${savedScore}`);
     } else {
-      console.log('--63--' + score);
       score++;
       localStorage.setItem('score', `${score}`);
     }
-    counter++;
   } else {
     getAnswerElement.style.backgroundColor = 'red';
 
@@ -119,7 +120,6 @@ const nextQuestion = () => {
     initQuestionPage(currentIndex);
   } else {
     currentIndex = 0;
-
     getScorePage();
   }
 };
@@ -151,8 +151,6 @@ const getScorePage = () => {
   resultDiv.appendChild(restartButton);
 
   userInterf.appendChild(resultDiv);
-
-  return userInterf;
 };
 
 const retakeTest = () => {

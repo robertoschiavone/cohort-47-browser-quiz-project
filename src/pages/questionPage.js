@@ -37,7 +37,10 @@ export const initQuestionPage = (currentIndex) => {
     answerElement.addEventListener('click', showAnswer);
     answersListElement.appendChild(answerElement);
   }
-
+  const progress = document.getElementById('progress');
+  const totalQuestions = quizData.questions.length;
+  const percentComplete = ((currentIndex + 1) / totalQuestions) * 100;
+  progress.style.width = percentComplete + '%';
   questionElement.appendChild(showScore());
 
   document
